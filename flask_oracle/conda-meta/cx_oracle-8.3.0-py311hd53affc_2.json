@@ -1,0 +1,129 @@
+{
+  "build": "py311hd53affc_2",
+  "build_number": 2,
+  "channel": "https://conda.anaconda.org/conda-forge/win-64",
+  "constrains": [],
+  "depends": [
+    "python >=3.11,<3.12.0a0",
+    "python_abi 3.11.* *_cp311",
+    "ucrt >=10.0.20348.0",
+    "vc >=14.2,<15",
+    "vs2015_runtime >=14.29.30139"
+  ],
+  "extracted_package_dir": "C:\\Users\\Admin\\anaconda3\\pkgs\\cx_oracle-8.3.0-py311hd53affc_2",
+  "features": "",
+  "files": [
+    "Lib/site-packages/cx_Oracle-8.3.0.dist-info/INSTALLER",
+    "Lib/site-packages/cx_Oracle-8.3.0.dist-info/LICENSE.txt",
+    "Lib/site-packages/cx_Oracle-8.3.0.dist-info/METADATA",
+    "Lib/site-packages/cx_Oracle-8.3.0.dist-info/RECORD",
+    "Lib/site-packages/cx_Oracle-8.3.0.dist-info/REQUESTED",
+    "Lib/site-packages/cx_Oracle-8.3.0.dist-info/WHEEL",
+    "Lib/site-packages/cx_Oracle-8.3.0.dist-info/direct_url.json",
+    "Lib/site-packages/cx_Oracle-8.3.0.dist-info/top_level.txt",
+    "Lib/site-packages/cx_Oracle.cp311-win_amd64.pyd",
+    "cx_Oracle-doc/LICENSE.txt",
+    "cx_Oracle-doc/README.txt",
+    ".nonadmin"
+  ],
+  "fn": "cx_oracle-8.3.0-py311hd53affc_2.tar.bz2",
+  "license": "BSD-3-Clause",
+  "license_family": "BSD",
+  "link": {
+    "source": "C:\\Users\\Admin\\anaconda3\\pkgs\\cx_oracle-8.3.0-py311hd53affc_2",
+    "type": 1
+  },
+  "md5": "f0bee16cd7cbc9615f02a81c8566f5c9",
+  "name": "cx_oracle",
+  "package_tarball_full_path": "C:\\Users\\Admin\\anaconda3\\pkgs\\cx_oracle-8.3.0-py311hd53affc_2.tar.bz2",
+  "paths_data": {
+    "paths": [
+      {
+        "_path": "Lib/site-packages/cx_Oracle-8.3.0.dist-info/INSTALLER",
+        "path_type": "hardlink",
+        "sha256": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "sha256_in_prefix": "d0edee15f91b406f3f99726e44eb990be6e34fd0345b52b910c568e0eef6a2a8",
+        "size_in_bytes": 5
+      },
+      {
+        "_path": "Lib/site-packages/cx_Oracle-8.3.0.dist-info/LICENSE.txt",
+        "path_type": "hardlink",
+        "sha256": "b384ca5f079ead742af12fe49ac08db322835413046977d155a12a3665aaa90d",
+        "sha256_in_prefix": "b384ca5f079ead742af12fe49ac08db322835413046977d155a12a3665aaa90d",
+        "size_in_bytes": 1805
+      },
+      {
+        "_path": "Lib/site-packages/cx_Oracle-8.3.0.dist-info/METADATA",
+        "path_type": "hardlink",
+        "sha256": "6c8bf860b34a1e0a5a8803871b22523d8085d3fcfeac60db81cb0d981cda14e9",
+        "sha256_in_prefix": "6c8bf860b34a1e0a5a8803871b22523d8085d3fcfeac60db81cb0d981cda14e9",
+        "size_in_bytes": 1159
+      },
+      {
+        "_path": "Lib/site-packages/cx_Oracle-8.3.0.dist-info/RECORD",
+        "path_type": "hardlink",
+        "sha256": "6aaec143669e12263c30601ddab89398482fcd448fef78f0aee0a855e1c68e7b",
+        "sha256_in_prefix": "6aaec143669e12263c30601ddab89398482fcd448fef78f0aee0a855e1c68e7b",
+        "size_in_bytes": 948
+      },
+      {
+        "_path": "Lib/site-packages/cx_Oracle-8.3.0.dist-info/REQUESTED",
+        "path_type": "hardlink",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256_in_prefix": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_in_bytes": 0
+      },
+      {
+        "_path": "Lib/site-packages/cx_Oracle-8.3.0.dist-info/WHEEL",
+        "path_type": "hardlink",
+        "sha256": "4f1c14795fb71c46e38d7550eea9d4648290e088a7859615feb9a4c2af3833f6",
+        "sha256_in_prefix": "4f1c14795fb71c46e38d7550eea9d4648290e088a7859615feb9a4c2af3833f6",
+        "size_in_bytes": 102
+      },
+      {
+        "_path": "Lib/site-packages/cx_Oracle-8.3.0.dist-info/direct_url.json",
+        "path_type": "hardlink",
+        "sha256": "37482758bf40a142e6a20c163d1a0903c78a57727b840523c7055a61c126206b",
+        "sha256_in_prefix": "37482758bf40a142e6a20c163d1a0903c78a57727b840523c7055a61c126206b",
+        "size_in_bytes": 70
+      },
+      {
+        "_path": "Lib/site-packages/cx_Oracle-8.3.0.dist-info/top_level.txt",
+        "path_type": "hardlink",
+        "sha256": "b6c95d33e5fa03baf27fdff1227b036eaa3ac8fd87bbeec7c881d0609171e38c",
+        "sha256_in_prefix": "b6c95d33e5fa03baf27fdff1227b036eaa3ac8fd87bbeec7c881d0609171e38c",
+        "size_in_bytes": 10
+      },
+      {
+        "_path": "Lib/site-packages/cx_Oracle.cp311-win_amd64.pyd",
+        "path_type": "hardlink",
+        "sha256": "3a2791cf6fa053524cff11d57d9d2eebbde5e979cc6c5b2305ff511af948ca34",
+        "sha256_in_prefix": "3a2791cf6fa053524cff11d57d9d2eebbde5e979cc6c5b2305ff511af948ca34",
+        "size_in_bytes": 543232
+      },
+      {
+        "_path": "cx_Oracle-doc/LICENSE.txt",
+        "path_type": "hardlink",
+        "sha256": "b384ca5f079ead742af12fe49ac08db322835413046977d155a12a3665aaa90d",
+        "sha256_in_prefix": "b384ca5f079ead742af12fe49ac08db322835413046977d155a12a3665aaa90d",
+        "size_in_bytes": 1805
+      },
+      {
+        "_path": "cx_Oracle-doc/README.txt",
+        "path_type": "hardlink",
+        "sha256": "0ded759cb97f816d3f19ffa5d5482c4f3d1101f89dc24c64b3120cff62f65069",
+        "sha256_in_prefix": "0ded759cb97f816d3f19ffa5d5482c4f3d1101f89dc24c64b3120cff62f65069",
+        "size_in_bytes": 163
+      }
+    ],
+    "paths_version": 1
+  },
+  "requested_spec": "cx_oracle",
+  "sha256": "a3bce0b38f108f6349fdd4bda875007c5227975ecef8d057c9ebb713192a15c8",
+  "size": 214305,
+  "subdir": "win-64",
+  "timestamp": 1667042089037,
+  "track_features": "",
+  "url": "https://conda.anaconda.org/conda-forge/win-64/cx_oracle-8.3.0-py311hd53affc_2.tar.bz2",
+  "version": "8.3.0"
+}
