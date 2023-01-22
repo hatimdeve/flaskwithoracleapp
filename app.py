@@ -8,7 +8,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 import pickle
-
+import ast
 app=Flask(__name__)
 
 app.config['SECRET_KEY'] = 'thisisasecretkey'
@@ -108,6 +108,15 @@ def getuser(user_name):
     l.append(password)
     cursor.close()
     return l
+    
+class Infoprof():
+    def selectdata(self,connexion):
+        cursor=connexion.cursor()    
+        p1='select * from cheffiliere.infoprofs'
+        cursor.execute(p1)
+        d={'course':list(json.dumps(x) for x in cursor)}
+        connexion.commit() 
+        return d  
 
 class course():
 
@@ -151,7 +160,7 @@ def login():
                 new_user = User(l[1],username=form.username.data, password=form.password.data)
                 login_user(new_user)
                 print("hiiiiiiiiii",l[1])
-                return redirect(url_for('table'))
+                return render_template('welcome.html')
     return render_template('login.html')
 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -162,15 +171,41 @@ def logout():
     cursor.close()
     logout_user()
     return redirect(url_for('login'))
+
+@app.route('/welcome', methods=['GET', 'POST'])
+@login_required
+def welcome():
+    return render_template('welcome.html')  
+
+@app.route('/tableinfoprof',methods=['POST','GET'])    
+@login_required
+def tableinfoprof():
+    infoprof=[]
+    global session_pool
+    print(session_pool)
+    c=Infoprof()
+    d=c.selectdata(session_pool)
+    for key,value in d.items():
+        for i in value:
+            my_list = ast.literal_eval(i)
+            infoprof.append(my_list)
+    #print(c.selectdata(c))
+    return render_template('infoprof.html',data=infoprof) 
+
 @app.route('/table/',methods=['POST','GET'])    
 @login_required
 def table():
+    cour=[]
     global session_pool
     print(session_pool)
     c=course()
     d=c.selectdata(session_pool)
+    for key,value in d.items():
+        for i in value:
+            my_list = ast.literal_eval(i)
+            cour.append(my_list)
     #print(c.selectdata(c))
-    return render_template('table.html',data=d)
+    return render_template('table.html',data=cour)
     '''
         userinfo=[]
     if request.method=='POST':

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -38,32 +37,7 @@
           </div>
         </div>
       </nav>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nom Matiere</th>
-            <th scope="col">Nom Prof</th>
-            <th scope="col">Nb heure coure</th>
-            <th scope="col">Nb heure tp</th>
-            <th scope="col">Salle</th>
-          </tr>
-        </thead>
-        {% for i in data %}
-        <tbody>
-          <tr>
-            <th scope="row">{{ i[0] }}</th>
-            <td>{{ i[1] }}</td>
-            <td>{{ i[2] }}</td>
-            <td>{{ i[3] }}</td>
-            <td>{{ i[4] }}</td>
-            <td>{{ i[5] }}</td>
-          </tr>
-        </tbody>
-        {% endfor %}
-      </table>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
   </body>
 
 </html>
-

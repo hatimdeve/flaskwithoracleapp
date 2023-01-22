@@ -42,11 +42,9 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Nom Matiere</th>
-            <th scope="col">Nom Prof</th>
-            <th scope="col">Nb heure coure</th>
-            <th scope="col">Nb heure tp</th>
-            <th scope="col">Salle</th>
+            <th scope="col">NOMPROF</th>
+            <th scope="col">NB heure travail</th>
+            <th scope="col">SALAIRE</th>
           </tr>
         </thead>
         {% for i in data %}
@@ -56,8 +54,6 @@
             <td>{{ i[1] }}</td>
             <td>{{ i[2] }}</td>
             <td>{{ i[3] }}</td>
-            <td>{{ i[4] }}</td>
-            <td>{{ i[5] }}</td>
           </tr>
         </tbody>
         {% endfor %}
