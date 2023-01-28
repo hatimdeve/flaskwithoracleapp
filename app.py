@@ -10,6 +10,7 @@ from wtforms.validators import InputRequired, Length, ValidationError
 import pickle
 import ast
 from flask import session
+from random import *
 app=Flask(__name__)
 
 app.config['SECRET_KEY'] = 'thisisasecretkey'
@@ -111,6 +112,7 @@ def getuser(user_name):
     return l
     
 class Infoprof():
+
     def selectdata(self,connexion):
         cursor=connexion.cursor()    
         p1='select * from cheffiliere.infoprofs'
@@ -119,6 +121,12 @@ class Infoprof():
         connexion.commit() 
         return d  
 
+    def insertdata(self,connexion,id,NOMPROF,NBHT,SALAIRE):
+        cursor=connexion.cursor()  
+        p1="INSERT INTO cheffiliere.infoprofs (id, nomprof,nbht,salaire) VALUES(:1,:2,:3,:4)"
+        cursor.execute(p1,(id,NOMPROF,NBHT,SALAIRE))
+        connexion.commit()
+        return "Data inserted successfully"  
 class course():
 
     def getconnection(self,score,score1):
@@ -133,16 +141,15 @@ class course():
         connexion.commit() 
         return d  
 
-    def insertdata(self,connexion):
+    def insertdata(self,connexion,id,nommatiere,nomprof,numheurecours,numheuretp,salle):
         cursor=connexion.cursor()  
-        data=request.get_json()  
         p1="INSERT INTO cheffiliere.course (id, nommatiere, nomprof, numheurecours, numheuretp, salle) VALUES(:1,:2,:3,:4,:5,:6)"
-        cursor.execute(p1,(data['id'],data['nommatiere'],data['nomprof'],data['numheurecours'],data['numheuretp'],data['salle']))
+        cursor.execute(p1,(id,nommatiere,nomprof,numheurecours,numheuretp,salle))
         connexion.commit()
-        cursor.close()
-        connexion.close()
         return "Data inserted successfully"   
-session_pool = None        
+
+session_pool = None  
+
 @app.route('/login',methods=['POST','GET'])     
 def login():
     form = LoginForm()
@@ -206,24 +213,37 @@ def tableinfoprof():
 @app.route('/insert',methods=['POST','GET'])    
 @login_required
 def insert():
-    if request.method=='POST':
+    global session_pool
+    id=randint(20,1000)
+    c=course()
+    error=None
+    try:
+      if request.method=='POST':
         NomMatiere=request.form["NomMatiere"]
         NomProf= request.form["NomProf"]
         Nbheurecoure=request.form["Nbheurecoure"]
         Nbheuretp= request.form["Nbheuretp"]
         Salle= request.form["Salle"]
-        print(NomMatiere,NomProf,Nbheurecoure,Nbheuretp,Salle)
-        return render_template('welcome.html')
+        d=c.insertdata(session_pool,id,NomMatiere,NomProf,Nbheurecoure,Nbheuretp,Salle)
+        print(d)
+        return redirect(url_for('table'))
+    except cx_Oracle.DatabaseError as e:
+        error=str(e)
+        return render_template('test.html', error_msg=error)
 
 @app.route('/insert1',methods=['POST','GET'])    
 @login_required
 def insert1():
+    global session_pool
+    id=randint(20,1000)
+    c=Infoprof()
     if request.method=='POST':
         NOMPROF=request.form["NOMPROF"]
         NBheuretravail= request.form["NBheuretravail"]
-        SALAIRE=request.form["Nbheurecoure"]
+        SALAIRE=request.form["SALAIRE"]
+        d=c.insertdata(session_pool,id,NOMPROF,NBheuretravail,SALAIRE)
         print(NOMPROF,NBheuretravail,SALAIRE)
-        return render_template('welcome.html')
+        return redirect(url_for('tableinfoprof'))
         
 @app.route('/table/',methods=['POST','GET'])    
 @login_required
