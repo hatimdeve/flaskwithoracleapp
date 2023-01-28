@@ -9,6 +9,7 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 import pickle
 import ast
+from flask import session
 app=Flask(__name__)
 
 app.config['SECRET_KEY'] = 'thisisasecretkey'
@@ -181,17 +182,49 @@ def welcome():
 @login_required
 def tableinfoprof():
     infoprof=[]
+    message=None
     global session_pool
     print(session_pool)
-    c=Infoprof()
-    d=c.selectdata(session_pool)
-    for key,value in d.items():
-        for i in value:
+    cursor = session_pool.cursor()
+    # Query the v$session view to get information about all active sessions
+    cursor.execute("select user from dual")
+    connected_users = cursor.fetchall()
+    print(connected_users[0][0])
+    if connected_users[0][0]=='CHEFFILIERE':
+       c=Infoprof()
+       d=c.selectdata(session_pool)
+       for key,value in d.items():
+          for i in value:
             my_list = ast.literal_eval(i)
             infoprof.append(my_list)
     #print(c.selectdata(c))
-    return render_template('infoprof.html',data=infoprof) 
+       return render_template('infoprof.html',data=infoprof,message=message) 
+    else:
+        message="vous n'avez pas le droit de voir cette table"
+        return render_template('infoprof.html',data=infoprof,message=message)  
 
+@app.route('/insert',methods=['POST','GET'])    
+@login_required
+def insert():
+    if request.method=='POST':
+        NomMatiere=request.form["NomMatiere"]
+        NomProf= request.form["NomProf"]
+        Nbheurecoure=request.form["Nbheurecoure"]
+        Nbheuretp= request.form["Nbheuretp"]
+        Salle= request.form["Salle"]
+        print(NomMatiere,NomProf,Nbheurecoure,Nbheuretp,Salle)
+        return render_template('welcome.html')
+
+@app.route('/insert1',methods=['POST','GET'])    
+@login_required
+def insert1():
+    if request.method=='POST':
+        NOMPROF=request.form["NOMPROF"]
+        NBheuretravail= request.form["NBheuretravail"]
+        SALAIRE=request.form["Nbheurecoure"]
+        print(NOMPROF,NBheuretravail,SALAIRE)
+        return render_template('welcome.html')
+        
 @app.route('/table/',methods=['POST','GET'])    
 @login_required
 def table():
@@ -225,6 +258,7 @@ def connexion(score,score1):
 
 @app.route('/')
 def home():
+    
     return render_template('home.html')
 
 

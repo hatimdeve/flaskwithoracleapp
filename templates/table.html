@@ -10,7 +10,6 @@
  
   </head>
   <body>
-    
     <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Navbar</a>
@@ -38,8 +37,53 @@
           </div>
         </div>
       </nav>
+      <!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  inser data into table course
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3"  action="{{ url_for('insert') }}"  method="POST">
+          <div class="col-md-6">
+            <label for="NomMatiere" class="form-label">Nom Matiere</label>
+            <input type="text" name="NomMatiere" class="form-control" id="NomMatiere">
+          </div>
+          <div class="col-md-6">
+            <label for="NomProf" class="form-label">Nom Prof</label>
+            <input type="text" name="NomProf" class="form-control" id="NomProf">
+          </div>
+          <div class="col-12">
+            <label for="Nbheurecoure" class="form-label">Nb heure coure</label>
+            <input type="number"  name="Nbheurecoure" class="form-control" id="Nbheurecoure" >
+          </div>
+          <div class="col-12">
+            <label for="Nbheuretp" class="form-label">Nb heure tp</label>
+            <input type="number" name="Nbheuretp" class="form-control" id="Nbheuretp" >
+          </div>
+          <div class="col-md-6">
+            <label for="Salle" class="form-label">Salle</label>
+            <input type="text" name="Salle" class="form-control" id="Salle">
+          </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" value="Submit" class="btn btn-primary">insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
       <table class="table">
-        <thead>
+        <thead class="table-dark">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nom Matiere</th>
@@ -62,6 +106,7 @@
         </tbody>
         {% endfor %}
       </table>
+      
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
   </body>
 
