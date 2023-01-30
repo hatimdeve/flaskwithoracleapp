@@ -117,7 +117,14 @@ class Infoprof():
         p1="delete from cheffiliere.infoprofs where id=:id" 
         cursor.execute(p1,{'id': id})  
         connexion.commit()
-        return "Data delete successfully"      
+        return "Data delete successfully"    
+    def upadte(self,connexion,id,NOMPROF,NBHT,SALAIRE):
+        cursor=connexion.cursor()
+        p1="update cheffiliere.course set nomprof=:1,nbht=:2,salaire=:3 where id=:4" 
+        cursor.execute(p1,(NOMPROF,NBHT,SALAIRE,id))  
+        connexion.commit()
+        return "Data updated successfully" 
+
 class course():
 
     def getconnection(self,score,score1):
@@ -145,6 +152,13 @@ class course():
         cursor.execute(p1,{'id': id})  
         connexion.commit()
         return "Data delete successfully"  
+
+    def upadte(self,connexion,id,nommatiere,nomprof,numheurecours,numheuretp,salle):
+        cursor=connexion.cursor()
+        p1="update cheffiliere.course set nommatiere=:1,nomprof=:2,numheurecours=:3,numheuretp=:4,salle=:5 where id=:6" 
+        cursor.execute(p1,(nommatiere,nomprof,numheurecours,numheuretp,salle,id))  
+        connexion.commit()
+        return "Data updated successfully"  
 
 session_pool = None  
 
@@ -193,6 +207,7 @@ def delete(id):
     except cx_Oracle.DatabaseError as e:
         error=str(e)
         return render_template('test.html', error_msg=error)
+
 @app.route('/delete1/<id>/', methods=['GET', 'POST'])
 @login_required
 def delete1(id):
@@ -202,7 +217,39 @@ def delete1(id):
     c=Infoprof()
     d=c.delete(session_pool,id)
     print(d)
-    return redirect(url_for('tableinfoprof'))     
+    return redirect(url_for('tableinfoprof'))  
+
+
+@app.route('/update', methods=['GET', 'POST'])
+@login_required
+def update():
+    global session_pool
+    c=course()
+    if request.method=='POST':
+        id=request.form['id']
+        NomMatiere=request.form["NomMatiere"]
+        NomProf= request.form["NomProf"]
+        Nbheurecoure=request.form["Nbheurecoure"]
+        Nbheuretp= request.form["Nbheuretp"]
+        Salle= request.form["Salle"]
+        d=c.upadte(session_pool,id,NomMatiere,NomProf,Nbheurecoure,Nbheuretp,Salle)
+        print(d)
+        return redirect(url_for('table'))
+    
+@app.route('/update1', methods=['GET', 'POST'])
+@login_required
+def update1():
+    global session_pool
+    c=Infoprof()
+    if request.method=='POST':
+        id=request.form['id']
+        NOMPROF=request.form["NOMPROF"]
+        NBheuretravail= request.form["NBheuretravail"]
+        SALAIRE=request.form["SALAIRE"]
+        d=c.upadte(session_pool,id,NOMPROF,NBheuretravail,SALAIRE)
+        print(d)
+        return redirect(url_for('tableinfoprof'))
+
 @app.route('/welcome', methods=['GET', 'POST'])
 @login_required
 def welcome():
@@ -227,7 +274,6 @@ def tableinfoprof():
           for i in value:
             my_list = ast.literal_eval(i)
             infoprof.append(my_list)
-    #print(c.selectdata(c))
        return render_template('infoprof.html',data=infoprof,message=message) 
     else:
         message="vous n'avez pas le droit de voir cette table"
@@ -282,7 +328,6 @@ def table():
         for i in value:
             my_list = ast.literal_eval(i)
             cour.append(my_list)
-    #print(c.selectdata(c))
     return render_template('table.html',data=cour)
 
 
