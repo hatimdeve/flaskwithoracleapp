@@ -1,6 +1,6 @@
 import json
 import cx_Oracle
-from flask import Flask,request,app,jsonify,url_for,render_template,redirect,g
+from flask import Flask,request,app,jsonify,url_for,render_template,redirect,g,flash
 from flask_restful import Api,Resource,reqparse
 from flask_cors import CORS,cross_origin
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -70,22 +70,7 @@ class sessionPool():
         cursor = self.conexion.cursor()
         cursor.close()
               
-'''
-def getsession(user,psw,inf):
-      l=[]
-      pool = cx_Oracle.SessionPool(
-                  user,
-                psw,
-                inf,
-                min=2, max=5, increment=1 )
-      conexion =pool.acquire()
-      l.append(pool)
-      l.append(conexion)
-      return l
 
-def endsession(conexion,pool):
-    pool.release(conexion)
-'''
 
 
 def init():
@@ -127,6 +112,12 @@ class Infoprof():
         cursor.execute(p1,(id,NOMPROF,NBHT,SALAIRE))
         connexion.commit()
         return "Data inserted successfully"  
+    def delete(self,connexion,id):
+        cursor=connexion.cursor()
+        p1="delete from cheffiliere.infoprofs where id=:id" 
+        cursor.execute(p1,{'id': id})  
+        connexion.commit()
+        return "Data delete successfully"      
 class course():
 
     def getconnection(self,score,score1):
@@ -147,6 +138,13 @@ class course():
         cursor.execute(p1,(id,nommatiere,nomprof,numheurecours,numheuretp,salle))
         connexion.commit()
         return "Data inserted successfully"   
+
+    def delete(self,connexion,id):
+        cursor=connexion.cursor()
+        p1="delete from cheffiliere.course where id=:id" 
+        cursor.execute(p1,{'id': id})  
+        connexion.commit()
+        return "Data delete successfully"  
 
 session_pool = None  
 
@@ -180,6 +178,31 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route('/delete/<id>/', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+    global session_pool
+    error=None
+    id=int(id)
+    print(id,type(id))
+    c=course()
+    try:
+       d=c.delete(session_pool,id)
+       print(d)
+       return redirect(url_for('table'))
+    except cx_Oracle.DatabaseError as e:
+        error=str(e)
+        return render_template('test.html', error_msg=error)
+@app.route('/delete1/<id>/', methods=['GET', 'POST'])
+@login_required
+def delete1(id):
+    global session_pool
+    id=int(id)
+    print(id,type(id))
+    c=Infoprof()
+    d=c.delete(session_pool,id)
+    print(d)
+    return redirect(url_for('tableinfoprof'))     
 @app.route('/welcome', methods=['GET', 'POST'])
 @login_required
 def welcome():
@@ -214,7 +237,7 @@ def tableinfoprof():
 @login_required
 def insert():
     global session_pool
-    id=randint(20,1000)
+    id=randint(0,38)
     c=course()
     error=None
     try:
@@ -226,6 +249,7 @@ def insert():
         Salle= request.form["Salle"]
         d=c.insertdata(session_pool,id,NomMatiere,NomProf,Nbheurecoure,Nbheuretp,Salle)
         print(d)
+        flash("Data inserted successfully ")
         return redirect(url_for('table'))
     except cx_Oracle.DatabaseError as e:
         error=str(e)
@@ -235,7 +259,7 @@ def insert():
 @login_required
 def insert1():
     global session_pool
-    id=randint(20,1000)
+    id=randint(0,38)
     c=Infoprof()
     if request.method=='POST':
         NOMPROF=request.form["NOMPROF"]
@@ -243,6 +267,7 @@ def insert1():
         SALAIRE=request.form["SALAIRE"]
         d=c.insertdata(session_pool,id,NOMPROF,NBheuretravail,SALAIRE)
         print(NOMPROF,NBheuretravail,SALAIRE)
+        flash("Data inserted successfully ")
         return redirect(url_for('tableinfoprof'))
         
 @app.route('/table/',methods=['POST','GET'])    
@@ -259,21 +284,6 @@ def table():
             cour.append(my_list)
     #print(c.selectdata(c))
     return render_template('table.html',data=cour)
-    '''
-        userinfo=[]
-    if request.method=='POST':
-       user =request.form["username"]
-       pasw=request.form["password"]
-    return redirect(url_for('connexion',score=user,score1=pasw))  
-    '''
-
-    '''
-    @app.route('/connexion/<string:score>/<string:score1>',methods=['GET'])     
-def connexion(score,score1):
-    f=course(0)
-    e=f.getconnection(score,score1)
-    return render_template('table.html',data=e)
-    ''' 
 
 
 @app.route('/')
