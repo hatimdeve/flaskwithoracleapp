@@ -120,7 +120,7 @@ class Infoprof():
         return "Data delete successfully"    
     def upadte(self,connexion,id,NOMPROF,NBHT,SALAIRE):
         cursor=connexion.cursor()
-        p1="update cheffiliere.course set nomprof=:1,nbht=:2,salaire=:3 where id=:4" 
+        p1="update cheffiliere.infoprofs set nomprof=:1,nbht=:2,salaire=:3 where id=:4" 
         cursor.execute(p1,(NOMPROF,NBHT,SALAIRE,id))  
         connexion.commit()
         return "Data updated successfully" 
@@ -233,7 +233,7 @@ def update():
         Nbheuretp= request.form["Nbheuretp"]
         Salle= request.form["Salle"]
         d=c.upadte(session_pool,id,NomMatiere,NomProf,Nbheurecoure,Nbheuretp,Salle)
-        print(d)
+        flash("Data updated successfully ")
         return redirect(url_for('table'))
     
 @app.route('/update1', methods=['GET', 'POST'])
@@ -246,8 +246,10 @@ def update1():
         NOMPROF=request.form["NOMPROF"]
         NBheuretravail= request.form["NBheuretravail"]
         SALAIRE=request.form["SALAIRE"]
+        print(id,NOMPROF,NBheuretravail,SALAIRE)
         d=c.upadte(session_pool,id,NOMPROF,NBheuretravail,SALAIRE)
         print(d)
+        flash("Data updated successfully ")
         return redirect(url_for('tableinfoprof'))
 
 @app.route('/welcome', methods=['GET', 'POST'])
